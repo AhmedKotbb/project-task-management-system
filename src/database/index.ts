@@ -1,5 +1,6 @@
 import { Sequelize } from "sequelize";
 import config from "../config";
+import { User } from "../models/user.model";
 
 class Database {
   private static instance: Database;
@@ -29,13 +30,21 @@ class Database {
   }
 
   public async connect(): Promise<void> {
-    await this.sequelize.authenticate();
-    console.log("PostgreSQL connection established successfully.");
+    try {
+      User.initialize(this.sequelize);
+
+      
+      await this.sequelize.authenticate();
+      await this.sequelize.sync({ force: false });
+      console.log("Connection has been established successfully!");
+    } catch (error) {
+      console.log("Unable to connect to the database:", error);
+    }
   }
 
   public async disconnect(): Promise<void> {
     await this.sequelize.close();
-    console.log("PostgreSQL connection closed.");
+    console.log("Database connection has been closed.");
   }
 }
 
