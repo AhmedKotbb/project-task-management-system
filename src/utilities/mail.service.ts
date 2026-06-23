@@ -28,7 +28,7 @@ class MailService {
   private async sendMail(options: MailOptions): Promise<void> {
     try {
       await this.transporter.sendMail({
-        from: config.emailFrom,
+        from: config.emailUser,
         to: options.to,
         subject: options.subject,
         text: options.text,

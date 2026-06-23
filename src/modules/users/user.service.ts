@@ -2,8 +2,8 @@ import { Op, WhereOptions } from "sequelize";
 import { CreateUserDto } from "./user.interfaces";
 import { User } from "../../database/models/user.model";
 import { APIError } from "../../shared/errors";
-import { createHash } from "../../utilities/hash-helper";
-import MailService from "../../utilities/mailer";
+import { createHash } from "../../utilities/hash.service";
+import MailService from "../../utilities/mail.service";
 
 class UserService {
 
@@ -32,7 +32,7 @@ class UserService {
   public async getUserDetails(id: string) {
     const user = await User.findByPk(id, {
       attributes: {
-        exclude: ['password', 'resetToken'],
+        exclude: ['password', 'refreshToken'],
       },
     });
     if (!user) throw APIError.NotFound('User not found');
@@ -56,7 +56,7 @@ class UserService {
 
     const { count, rows } = await User.findAndCountAll({
       where,
-      attributes: { exclude: ['password', 'resetToken'] },
+      attributes: { exclude: ['password', 'refreshToken'] },
       order: [[sortBy, sort]],
       limit,
       offset,

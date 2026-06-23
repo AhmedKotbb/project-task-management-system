@@ -42,13 +42,13 @@ export class User extends Model {
           defaultValue: false,
           allowNull: false,
         },
-        resetToken: {
-          type: DataTypes.STRING,
+        lastLoginAt: {
+          type: DataTypes.DATE,
           allowNull: true,
           defaultValue: null,
         },
-        lastLoginAt: {
-          type: DataTypes.DATE,
+        refreshToken: {
+          type: DataTypes.STRING,
           allowNull: true,
           defaultValue: null,
         },

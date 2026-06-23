@@ -10,7 +10,10 @@ class Configuration {
   public readonly dbHost: string;
   public readonly emailUser: string;
   public readonly emailPassword: string;
-  public readonly emailFrom: string;
+  public readonly jwtAccessSecret: string;
+  public readonly jwtAccessExpiresIn: string;
+  public readonly jwtRefreshSecret: string;
+  public readonly jwtRefreshExpiresIn: string;
 
   private constructor() {
     dotenv.config();
@@ -19,9 +22,14 @@ class Configuration {
     this.dbPassword = process.env.DB_PASSWORD || "";
     this.dbName = process.env.DB_NAME || "";
     this.dbHost = process.env.DB_HOST || "";
+    // Email
     this.emailUser = process.env.EMAIL_USER || "";
     this.emailPassword = process.env.EMAIL_PASS || "";
-    this.emailFrom = process.env.EMAIL_FROM || process.env.EMAIL_USER || "";
+    // JWT
+    this.jwtAccessSecret = process.env.JWT_ACCESS_SECRET || "";
+    this.jwtAccessExpiresIn = process.env.JWT_ACCESS_EXPIRES_IN || "";
+    this.jwtRefreshSecret = process.env.JWT_REFRESH_SECRET || "";
+    this.jwtRefreshExpiresIn = process.env.JWT_REFRESH_EXPIRES_IN || "";
   }
 
   public static getInstance(): Configuration {
