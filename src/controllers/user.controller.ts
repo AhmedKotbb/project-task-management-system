@@ -1,17 +1,31 @@
 import { Request, Response, NextFunction } from 'express';
 import UserService from '../services/user.service';
 import { responseHandler } from '../utilities/api-response';
+import { ListAllInterface } from '../interfaces/common.interfaces';
 
 class UserController {
-  private readonly service: UserService;
+  private service: UserService;
+
   constructor() {
-    this.service = new UserService();
+      this.service = new UserService()
   }
 
-  public async createNewUserHandler(req: Request, res: Response, next: NextFunction) {
-    await this.service.createNewUser();
+  public createNewUserHandler = async (req: Request, res: Response, next: NextFunction) => {
+    await this.service.createNewUser(req.body);
     responseHandler(res, 201, "User created successfully");
   }
+
+  public getUserDetailsHandler = async (req: Request, res: Response, next: NextFunction) => {
+    const user = await this.service.getUserDetails(req.params.id as string);
+    responseHandler(res, 200, "User details fetched successfully", user);
+  }
+
+  public listAllUsersHandler = async (req: Request, res: Response, next: NextFunction) => {
+    const data = await this.service.listAllUsers(req.query);
+    responseHandler(res, 200, "Users fetched successfully", data);
+  }
+
+
 }
 
 export default UserController;

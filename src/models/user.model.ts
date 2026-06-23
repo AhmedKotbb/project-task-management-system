@@ -33,6 +33,10 @@ export class User extends Model {
             isNumeric: true,
           },
         },
+        role: {
+          type: DataTypes.ENUM('admin', 'member'),
+          allowNull: false,
+        },
         isDeleted: {
           type: DataTypes.BOOLEAN,
           defaultValue: false,

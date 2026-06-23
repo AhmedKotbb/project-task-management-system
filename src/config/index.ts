@@ -8,6 +8,9 @@ class Configuration {
   public readonly dbPassword: string;
   public readonly dbName: string;
   public readonly dbHost: string;
+  public readonly emailUser: string;
+  public readonly emailPassword: string;
+  public readonly emailFrom: string;
 
   private constructor() {
     dotenv.config();
@@ -16,6 +19,9 @@ class Configuration {
     this.dbPassword = process.env.DB_PASSWORD || "";
     this.dbName = process.env.DB_NAME || "";
     this.dbHost = process.env.DB_HOST || "";
+    this.emailUser = process.env.EMAIL_USER || "";
+    this.emailPassword = process.env.EMAIL_PASS || "";
+    this.emailFrom = process.env.EMAIL_FROM || process.env.EMAIL_USER || "";
   }
 
   public static getInstance(): Configuration {

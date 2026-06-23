@@ -6,7 +6,7 @@ export const errorHandler = (err: APIError, req: Request, res: Response, next: N
     res.locals.message = err.message;
     res.locals.error = req.app.get("env") === "development" ? err : {};
 
-    res.status(err.statusCode).json(
+    res.status(err.statusCode || 500).json(
         {
             statusCode: err.statusCode || 500,
             statusText: err.statusText || 'Error',
