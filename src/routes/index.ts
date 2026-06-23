@@ -1,8 +1,8 @@
 import { Router } from "express";
-import AuthRoutes from "./auth.routes";
-import ProjectRoutes from "./project.routes";
-import TaskRoutes from "./task.routes";
-import UserRoutes from "./user.routes";
+import AuthRoutes from "../modules/auth/auth.routes";
+import ProjectRoutes from "../modules/projects/project.routes";
+import TaskRoutes from "../modules/tasks/task.routes";
+import UserRoutes from "../modules/users/user.routes";
 
 class Routes {
   public readonly router: Router = Router();

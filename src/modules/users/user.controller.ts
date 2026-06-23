@@ -1,7 +1,6 @@
 import { Request, Response, NextFunction } from 'express';
-import UserService from '../services/user.service';
-import { responseHandler } from '../utilities/api-response';
-import { ListAllInterface } from '../interfaces/common.interfaces';
+import UserService from './user.service';
+import { responseHandler } from '../../shared/api-response';
 
 class UserController {
   private service: UserService;

@@ -1,5 +1,5 @@
 import { Request, Response, NextFunction } from "express";
-import { APIError } from "../utilities/errors";
+import { APIError } from "../shared/errors";
 
 type AsyncFunction = (req: Request, res: Response, next: NextFunction) => Promise<void>;
 

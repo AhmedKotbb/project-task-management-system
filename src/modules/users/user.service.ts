@@ -1,10 +1,9 @@
 import { Op, WhereOptions } from "sequelize";
-import { ListAllInterface } from "../interfaces/common.interfaces";
-import { CreateUserDto } from "../interfaces/user.interfaces";
-import { User } from "../models/user.model";
-import { APIError } from "../utilities/errors";
-import { createHash } from "../utilities/hash-helper";
-import MailService from "../utilities/mailer";
+import { CreateUserDto } from "./user.interfaces";
+import { User } from "../../database/models/user.model";
+import { APIError } from "../../shared/errors";
+import { createHash } from "../../utilities/hash-helper";
+import MailService from "../../utilities/mailer";
 
 class UserService {
 

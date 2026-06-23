@@ -1,7 +1,13 @@
 import nodemailer, { Transporter } from "nodemailer";
 import config from "../config";
-import { MailOptions } from "../interfaces/mail.interface";
-import { APIError } from "./errors";
+import { APIError } from "../shared/errors";
+
+export interface MailOptions {
+  to: string;
+  subject: string;
+  text: string;
+  html?: string;
+}
 
 class MailService {
   private transporter: Transporter;

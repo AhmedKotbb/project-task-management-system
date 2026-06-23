@@ -1,5 +1,5 @@
 import { NextFunction, Request, Response } from "express";
-import { APIError } from "../utilities/errors";
+import { APIError } from "../shared/errors";
 
 export const errorHandler = (err: APIError, req: Request, res: Response, next: NextFunction): void => {
     // set locals, only providing error in development

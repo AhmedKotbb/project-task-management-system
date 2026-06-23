@@ -1,6 +1,6 @@
 import { Sequelize } from "sequelize";
 import config from "../config";
-import { User } from "../models/user.model";
+import { User } from "./models/user.model";
 
 class Database {
   private static instance: Database;
@@ -33,7 +33,7 @@ class Database {
     try {
       User.initialize(this.sequelize);
 
-      
+
       await this.sequelize.authenticate();
       await this.sequelize.sync({ force: false });
       console.log("Connection has been established successfully!");

@@ -1,8 +1,8 @@
 import { Router } from "express";
-import UserController from "../controllers/user.controller";
-import asyncHandler from "../middlewares/async-wrapper";
-import { validateSchemas } from "../middlewares/validate-schemas";
-import { userSchemas } from "../schemas/user.schemas";
+import UserController from "./user.controller";
+import asyncHandler from "../../middleware/async-wrapper";
+import { validateSchemas } from "../../middleware/validate-schemas";
+import { userSchemas } from "./user.schemas";
 
 class UserRoutes {
   public readonly router: Router = Router();

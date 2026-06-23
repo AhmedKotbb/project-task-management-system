@@ -1,6 +1,7 @@
 import Joi from "joi";
-import { CreateUserDto } from "../interfaces/user.interfaces";
-import { DetailsInterface, ListAllInterface } from "../interfaces/common.interfaces";
+// import { DetailsInterface, ListAllInterface } from "../../interfaces/common.interfaces";
+import { CreateUserDto } from "./user.interfaces";
+
 
 export const userSchemas = {
   createUser: Joi.object<CreateUserDto>({
@@ -10,11 +11,11 @@ export const userSchemas = {
     role: Joi.string().valid('admin', 'member').required(),
   }),
 
-  details: Joi.object<DetailsInterface>({
+  details: Joi.object({
     id: Joi.string().uuid().required(),
   }),
 
-  listAll: Joi.object<ListAllInterface>({
+  listAll: Joi.object({
     page: Joi.number().min(1).required(),
     limit: Joi.number().min(1).default(10),
     sortBy: Joi.string().valid("createdAt", "updatedAt").default("createdAt"),
