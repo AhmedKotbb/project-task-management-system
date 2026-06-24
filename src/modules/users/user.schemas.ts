@@ -1,5 +1,4 @@
 import Joi from "joi";
-// import { DetailsInterface, ListAllInterface } from "../../interfaces/common.interfaces";
 import { CreateUserDto } from "./user.interfaces";
 
 

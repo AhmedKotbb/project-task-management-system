@@ -1,6 +1,7 @@
 import { Sequelize } from "sequelize";
 import config from "../config";
 import { User } from "./models/user.model";
+import { Project } from "./models/project.model";
 
 class Database {
   private static instance: Database;
@@ -32,7 +33,16 @@ class Database {
   public async connect(): Promise<void> {
     try {
       User.initialize(this.sequelize);
+      Project.initialize(this.sequelize);
 
+      User.hasMany(Project, {
+        foreignKey: "createdBy",
+        as: "projects",
+      });
+      Project.belongsTo(User, {
+        foreignKey: "createdBy",
+        as: "creator",
+      });
 
       await this.sequelize.authenticate();
       await this.sequelize.sync({ force: false });
