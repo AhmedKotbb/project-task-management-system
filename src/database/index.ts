@@ -2,6 +2,7 @@ import { Sequelize } from "sequelize";
 import config from "../config";
 import { User } from "./models/user.model";
 import { Project } from "./models/project.model";
+import { Task } from "./models/task.model";
 
 class Database {
   private static instance: Database;
@@ -34,6 +35,7 @@ class Database {
     try {
       User.initialize(this.sequelize);
       Project.initialize(this.sequelize);
+      Task.initialize(this.sequelize);
 
       User.hasMany(Project, {
         foreignKey: "createdBy",
@@ -42,6 +44,33 @@ class Database {
       Project.belongsTo(User, {
         foreignKey: "createdBy",
         as: "creator",
+      });
+
+      Project.hasMany(Task, {
+        foreignKey: "projectId",
+        as: "tasks",
+      });
+      Task.belongsTo(Project, {
+        foreignKey: "projectId",
+        as: "project",
+      });
+
+      User.hasMany(Task, {
+        foreignKey: "createdBy",
+        as: "createdTasks",
+      });
+      Task.belongsTo(User, {
+        foreignKey: "createdBy",
+        as: "creator",
+      });
+
+      User.hasMany(Task, {
+        foreignKey: "assignedTo",
+        as: "assignedTasks",
+      });
+      Task.belongsTo(User, {
+        foreignKey: "assignedTo",
+        as: "assignee",
       });
 
       await this.sequelize.authenticate();

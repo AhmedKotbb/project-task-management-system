@@ -64,12 +64,12 @@ class ProjectService {
     const { id, title, status, description } = dto;
     const [project, existingTitle] = await Promise.all([
       Project.findByPk(dto.id),
-      Project.findOne({
+      title ? Project.findOne({
         where: {
           title: title,
           id: { [Op.ne]: id },
         },
-      }),
+      }) : null,
     ])
 
     if(!project) {
