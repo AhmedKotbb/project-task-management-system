@@ -1,6 +1,7 @@
 import { Request, Response, NextFunction } from 'express';
 import UserService from './user.service';
 import { responseHandler } from '../../shared/api-response';
+import { TokenPayload } from '../auth/auth.interfaces';
 
 class UserController {
   private service: UserService;
@@ -22,6 +23,11 @@ class UserController {
   public listAllUsersHandler = async (req: Request, res: Response, next: NextFunction) => {
     const data = await this.service.listAllUsers(req.query);
     responseHandler(res, 200, "Users fetched successfully", data);
+  }
+
+  public changePasswordHandler = async (req: Request, res: Response, next: NextFunction) => {
+    await this.service.changePassword(req.body, req.user as TokenPayload);
+    responseHandler(res, 200, "Password changed successfully");
   }
 
 

@@ -2,8 +2,9 @@ import { Op, WhereOptions } from "sequelize";
 import { CreateUserDto } from "./user.interfaces";
 import { User } from "../../database/models/user.model";
 import { APIError } from "../../shared/errors";
-import { createHash } from "../../utilities/hash.service";
+import { createHash, verifyHash } from "../../utilities/hash.service";
 import MailService from "../../utilities/mail.service";
+import { TokenPayload } from "../auth/auth.interfaces";
 
 class UserService {
 
@@ -68,6 +69,34 @@ class UserService {
       currentPage: +page,
       rows: rows,
     };
+  }
+
+  public async changePassword(dto: any, payload: TokenPayload) {
+    const { oldPassword, newPassword, confirmPassword } = dto;
+    if (newPassword !== confirmPassword) {
+      throw APIError.BadRequest("New password and confirm password do not match");
+    }
+
+    if (oldPassword === newPassword) {
+      throw APIError.BadRequest("New password cannot be the same as the old password");
+    }
+
+    const user = await User.findByPk(payload.id);
+    if (!user) {
+      throw APIError.NotFound("User not found");
+    }
+
+    const isPasswordValid = await verifyHash(oldPassword, user.dataValues.password);
+    if (!isPasswordValid) {
+      throw APIError.BadRequest("Old password is incorrect");
+    }
+
+    const hashedNewPassword = await createHash(newPassword);
+    await user.update({
+      password: hashedNewPassword,
+      isFirstLogin: false,
+    });
+    return;
   }
 
 

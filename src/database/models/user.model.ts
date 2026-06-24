@@ -52,6 +52,11 @@ export class User extends Model {
           allowNull: true,
           defaultValue: null,
         },
+        isFirstLogin: {
+          type: DataTypes.BOOLEAN,
+          defaultValue: true,
+          allowNull: false,
+        },
       },
       {
         sequelize,

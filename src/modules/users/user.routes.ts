@@ -31,6 +31,12 @@ class UserRoutes {
       validateSchemas(userSchemas.listAll, 'query'),
       asyncHandler(this.controller.listAllUsersHandler)
     )
+
+    this.router.patch('/change-password',
+      authenticate,
+      validateSchemas(userSchemas.changePassword),
+      asyncHandler(this.controller.changePasswordHandler)
+    )
   }
 }
 

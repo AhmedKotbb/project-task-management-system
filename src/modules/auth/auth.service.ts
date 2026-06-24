@@ -22,8 +22,7 @@ class AuthService {
     const hashedRefreshToken = await createHash(refreshToken);
     await user.update({
       refreshToken: hashedRefreshToken,
-      // If the user has never logged in, set the lastLoginAt to null so he is redirected to change his password
-      lastLoginAt: user.dataValues.lastLoginAt == null ? null : new Date(),
+      lastLoginAt: new Date(),
     });
 
     return { accessToken, refreshToken };
@@ -57,7 +56,7 @@ class AuthService {
     if (user.dataValues.isDeleted) throw APIError.BadRequest("Invalid user");
 
     await user.update({ refreshToken: null });
-    
+
   }
 
 }
