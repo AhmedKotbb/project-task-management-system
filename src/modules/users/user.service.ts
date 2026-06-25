@@ -57,6 +57,7 @@ class UserService {
 
     const { count, rows } = await User.findAndCountAll({
       where,
+      distinct: true,
       attributes: { exclude: ['password', 'refreshToken'] },
       order: [[sortBy, sort]],
       limit,

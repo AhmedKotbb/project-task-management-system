@@ -40,6 +40,7 @@ class ProjectService {
 
     const { count, rows } = await Project.findAndCountAll({
       where,
+      distinct: true,
       attributes: { exclude: ['createdBy'] },
       include: [
         {

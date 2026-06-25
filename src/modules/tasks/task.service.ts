@@ -131,6 +131,7 @@ class TaskService {
 
     const { count, rows } = await Task.findAndCountAll({
       where,
+      distinct: true,
       attributes: { exclude: ["createdBy"] },
       include: [
         {
