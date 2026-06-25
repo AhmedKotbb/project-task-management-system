@@ -9,6 +9,7 @@ async function startServer(): Promise<void> {
 
   const server = app.listen(port, () => {
     console.log(`Server is running on http://localhost:${port}`);
+    console.log(`Swagger documentation is available at http://localhost:${port}/docs`);
   });
 
   const shutdown = async (signal: string) => {

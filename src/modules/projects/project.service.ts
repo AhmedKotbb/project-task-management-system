@@ -4,6 +4,7 @@ import { APIError } from "../../shared/errors";
 import { TokenPayload } from "../auth/auth.interfaces";
 import { CreateProjectDto, UpdateProjectDto } from "./project.dtos";
 import { User } from "../../database/models/user.model";
+import { Task } from "../../database/models/task.model";
 
 class ProjectService {
 
@@ -45,6 +46,18 @@ class ProjectService {
           model: User,
           as: 'creator',
           attributes: ['id', 'fullName', 'email', 'phoneNumber'],
+        },
+        {
+          model: Task,
+          as: 'tasks',
+          attributes: ['id', 'title', 'description', 'status', 'createdAt', 'updatedAt', 'assignedTo'],
+          include: [
+            {
+              model: User,
+              as: 'assignee',
+              attributes: ['id', 'fullName', 'email', 'phoneNumber'],
+            }
+          ]
         }
       ],
       order: [[sortBy, sort]],
@@ -103,6 +116,8 @@ class ProjectService {
       throw APIError.BadRequest("Project is already deleted");
     }
     await project.update({ isDeleted: true });
+    // delete all the tasks associated with the project in the background
+    Task.update({ isDeleted: true }, { where: { projectId: id } });
   }
 
   public async getProjectDetails(id: string){
@@ -112,6 +127,18 @@ class ProjectService {
           model: User,
           as: 'creator',
           attributes: ['id', 'fullName', 'email', 'phoneNumber'],
+        },
+        {
+          model: Task,
+          as: 'tasks',
+          attributes: ['id', 'title', 'description', 'status', 'createdAt', 'updatedAt', 'assignedTo'],
+          include: [
+            {
+              model: User,
+              as: 'assignee',
+              attributes: ['id', 'fullName', 'email', 'phoneNumber'],
+            }
+          ]
         }
       ]
     });

@@ -4,6 +4,7 @@ import asyncHandler from "../../middleware/async-wrapper";
 import { validateSchemas } from "../../middleware/validate-schemas";
 import { userSchemas } from "./user.schemas";
 import { authenticate } from "../../middleware/authenticate";
+import { isAdmin } from "../../middleware/is-admin";
 
 class UserRoutes {
   public readonly router: Router = Router();
@@ -16,6 +17,7 @@ class UserRoutes {
   private initializeRoutes() {
     this.router.post('/create',
       authenticate,
+      isAdmin,
       validateSchemas(userSchemas.createUser),
       asyncHandler(this.controller.createNewUserHandler)
     )
